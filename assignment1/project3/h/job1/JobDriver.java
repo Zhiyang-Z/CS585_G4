@@ -66,6 +66,9 @@ public class JobDriver {
                     user_name.put(user, new Text(parts[0]));
                     user_region.put(user, Integer.parseInt(parts[1]));
                 } else {
+                    if (parts.length != 1) {
+                        throw new IOException("Meet unexpected format: " + value.toString());
+                    }
                     follower.computeIfAbsent(user, k -> new ArrayList<>()).add(Integer.parseInt(parts[0]));
                 }
             }
