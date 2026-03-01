@@ -10,27 +10,26 @@ np.random.seed(42) #for reproducibility
 pointsNum = 6000
 k = 3
 
-# for verification purpose, we select 3 centers and generate points around them
-centers = np.array([[2000, 200000, 2000, 200000], [4000, 400000, 4000, 400000], [6000, 600000, 6000, 600000]])
-points_per_center = pointsNum // len(centers)
-# generate points around each center with Gaussian distribution
-w = []
-x = []
-y = []
-z = []
-for center in centers:
-    w.extend(np.random.normal(loc=center[0], scale=50, size=points_per_center))
-    x.extend(np.random.normal(loc=center[1], scale=5000, size=points_per_center))
-    y.extend(np.random.normal(loc=center[2], scale=50, size=points_per_center))
-    z.extend(np.random.normal(loc=center[3], scale=5000, size=points_per_center))
+# Define cluster centers
+centers = np.array([
+    [2000, 200000, 2000, 200000],
+    [4000, 400000, 4000, 400000],
+    [6000, 600000, 6000, 600000],
+])
 
-data = pd.DataFrame({
-    'w': w,
-    'x': x,
-    'y': y,
-    'z': z,
-})
+# Standard deviations for each feature
+std_dev = np.array([50, 5000, 50, 5000])
+
+# Generate points
+data_list = []
+points_per_cluster = pointsNum // len(centers)
+for center in centers:
+    cluster_points = np.random.normal(loc=center, scale=std_dev, size=(points_per_cluster, 4))
+    data_list.append(cluster_points)
+
+data_array = np.vstack(data_list)
 # save csv and avoid file header for easier loading in the MapReduce job
+data = pd.DataFrame(data_array)
 data.to_csv("kmeans_data.csv", index=False, header=False)
 print("Dataset generated.")
 

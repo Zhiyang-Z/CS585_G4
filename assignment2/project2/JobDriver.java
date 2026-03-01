@@ -203,7 +203,7 @@ public class JobDriver {
     // Main driver
     public static void main(String[] args) throws IOException, InterruptedException, ClassNotFoundException, URISyntaxException {
         int maxIter = 100;
-        double epsilon = 0.001;
+        double epsilon = 0.03;
         boolean converged = false;
         int iteration = 0;
         List<double[]> oldCentroids = null;
