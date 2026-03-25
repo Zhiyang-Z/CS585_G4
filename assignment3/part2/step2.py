@@ -1,5 +1,4 @@
 from pyspark.sql import SparkSession
-from pyspark.sql.types import StructType, StructField, StringType, IntegerType
 
 spark = SparkSession.builder.appName("Step2_SparkSQL").config("spark.driver.memory", "8g").getOrCreate()
 # Task 2.1
